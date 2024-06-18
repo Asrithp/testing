@@ -1,0 +1,33 @@
+import matplotlib.pyplot as plt
+from matplotlib.patches import PathPatch
+from matplotlib.textpath import TextPath
+from matplotlib.transforms import Affine2D
+
+# Function to create a custom path for the text
+def create_text_path(text, font_size=100):
+    return TextPath((0, 0), text, size=font_size, prop={'family': 'serif', 'weight': 'bold'})
+
+# Create figure and axis
+fig, ax = plt.subplots()
+
+# Define the text and font size
+text = "nTR"
+font_size = 200
+
+# Create a transformation for positioning
+transform = Affine2D().translate(0.5, 0.5) + ax.transAxes
+
+# Create and add patches for each letter
+for i, char in enumerate(text):
+    path = create_text_path(char, font_size)
+    patch = PathPatch(path, facecolor='black', lw=1, transform=transform + Affine2D().translate(i * 0.15, 0))
+    ax.add_patch(patch)
+
+# Set the aspect of the plot to be equal
+ax.set_aspect('equal')
+
+# Remove axes for a cleaner look
+ax.axis('off')
+
+# Display the plot
+plt.show()
